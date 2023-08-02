@@ -11,7 +11,8 @@ namespace Prototype
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                gameObject.transform.Rotate(0, 360/60, 0);
+                gameObject.transform.Rotate(0, 360f/60f, 0);
+                EventManager.PlayerMoved();
                 arcDrawer.Draw();
             }
         }

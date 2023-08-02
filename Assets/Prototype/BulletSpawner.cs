@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +16,17 @@ namespace Prototype
 
         [SerializeField] private List<bool> bulletPattern = new();
 
+        private void Awake()
+        {
+            EventManager.OnPlayerMove += OnPlayerMoved;
+        }
+
         private void Start()
         {
             InvokeRepeating(nameof(QueuePattern), 0, delayBetweenShots);
         }
 
-        private void Update()
+        private void OnPlayerMoved()
         {
             gameObject.transform.rotation = Quaternion.Euler(0, target.transform.rotation.eulerAngles.y, 0);
         }
