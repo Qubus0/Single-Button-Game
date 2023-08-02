@@ -702,13 +702,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1a286f402c744f3a2818373e7b090b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 994001107143660821, guid: a201fec40bc3c44dc9b329ad0af87fb7, type: 3}
-  bulletTelegraphingLine: {fileID: 3014040238134343379, guid: 1078d0eb6a5574cf095cca68d9a0f492, type: 3}
   target: {fileID: 1472656585}
-  bulletSpeed: 10
   delayBetweenShots: 3
-  timeUntilShot: 2
-  bulletPattern: 010001000101010000
+  bulletPatterns:
+  - {fileID: 11400000, guid: fb7ac44198d1745c3bdecbd3e7b3236e, type: 2}
+  - {fileID: 11400000, guid: 9b446f13c165d4ebbbf5f831d36cf9ef, type: 2}
+  difficulty: 2
 --- !u!4 &1542230212
 Transform:
   m_ObjectHideFlags: 0

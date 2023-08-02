@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4231438956940624279}
   - component: {fileID: 3014040238134343379}
   m_Layer: 0
-  m_Name: BulletTelegraphingLine
+  m_Name: BulletTelegraphLineMedium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.02439025
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0

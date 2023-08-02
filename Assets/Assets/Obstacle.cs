@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Prototype
+namespace Assets
 {
     public class Obstacle : MonoBehaviour
     {

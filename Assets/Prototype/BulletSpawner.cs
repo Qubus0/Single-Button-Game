@@ -1,21 +1,21 @@
-using System;
 using System.Collections.Generic;
+using Assets;
 using UnityEngine;
 
 namespace Prototype
 {
     public class BulletSpawner : MonoBehaviour
     {
-        [SerializeField] private Bullet bulletPrefab;
-        [SerializeField] private BulletTelegraphLine bulletTelegraphingLine;
         [SerializeField] private Player target;
 
-        [SerializeField] private float bulletSpeed = 1;
         [SerializeField] private float delayBetweenShots = 1;
-        [SerializeField] private float timeUntilShot = 1;
 
-        [SerializeField] private List<bool> bulletPattern = new();
+        [SerializeField] private List<BulletPattern> bulletPatterns = new();
 
+        private BulletPattern currentPattern; // todo use coroutine instead of invoke
+        private BulletPattern lastPattern;
+        [SerializeField] private int difficulty = 2;
+        
         private void Awake()
         {
             EventManager.OnPlayerMove += OnPlayerMoved;
@@ -33,22 +33,30 @@ namespace Prototype
 
         private void QueuePattern()
         {
-            List<bool> pattern = bulletPattern;
+            // filter out all patterns that are too difficult
+            List<BulletPattern> validPatterns = bulletPatterns.FindAll(pattern => pattern.patternDifficulty <= difficulty);
+            
+            // select a random bullet pattern
+            currentPattern = validPatterns[Random.Range(0, validPatterns.Count)];
+            // if the pattern is the same as the last one, re roll once
+            if (currentPattern == lastPattern)
+                currentPattern = validPatterns[Random.Range(0, validPatterns.Count)];
+            lastPattern = currentPattern;
+            currentPattern.SetTargetDifficulty(difficulty);
+            
             TelegraphPattern();
-            Invoke(nameof(ShootPattern), timeUntilShot);
+            Invoke(nameof(ShootPattern), currentPattern.TelegraphTime);
         }
 
         private void TelegraphPattern()
         {
-            List<bool> pattern = bulletPattern; // todo use coroutine instead of invoke
-
             float targetAngle = 0f;
-            foreach (bool shot in pattern)
+            foreach (bool shot in currentPattern.pattern)
             {
                 if (shot)
                 {
-                    var lineObject = Instantiate(bulletTelegraphingLine, gameObject.transform, false);
-                    lineObject.MaxLifetime = timeUntilShot;
+                    var lineObject = Instantiate(currentPattern.TelegraphLine, gameObject.transform, false);
+                    lineObject.MaxLifetime = currentPattern.TelegraphTime;
                     var line = lineObject.GetComponent<LineRenderer>();
                     var lineDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
                     line.SetPosition(1, lineDirection * 6);
@@ -62,10 +70,8 @@ namespace Prototype
 
         private void ShootPattern()
         {
-            List<bool> pattern = bulletPattern; // todo use coroutine instead of invoke
-
             float targetAngle = target.transform.rotation.eulerAngles.y;
-            foreach (bool shouldShoot in pattern)
+            foreach (bool shouldShoot in currentPattern.pattern)
             {
                 if (shouldShoot)
                     ShootBullet(targetAngle);
@@ -77,9 +83,10 @@ namespace Prototype
         // Update is called once per frame
         private void ShootBullet(float angle)
         {
+            var bulletPrefab = currentPattern.BulletPrefab;
+
             var bullet = Instantiate(bulletPrefab, gameObject.transform.position, Quaternion.identity);
             bullet.transform.Rotate(0, angle, 0);
-            bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
         }
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2335812179487716388}
   - component: {fileID: 994001107143660821}
   m_Layer: 3
-  m_Name: Bullet
+  m_Name: BulletFast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,3 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5cdfb8ed3cd4ef8a08dbe410f671f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Difficulty: 2
+  damage: 1
+  timeToLive: 5
+  speed: 6
+  telegraphTime: 2
+  telegraphLine: {fileID: 3014040238134343379, guid: 1078d0eb6a5574cf095cca68d9a0f492, type: 3}

@@ -1,12 +1,11 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Prototype
+namespace Assets
 {
     public class BulletTelegraphLine : MonoBehaviour
     {
-        private float maxLifetime;
+        public float MaxLifetime { private get; set; } = 1f;
         private float lifetime;
         private float blinkTime;
         private LineRenderer lineRenderer;
@@ -28,8 +27,8 @@ namespace Prototype
 
         private void Start()
         {
-            lifetime = maxLifetime;
-            blinkTime = maxLifetime/2;
+            lifetime = MaxLifetime;
+            blinkTime = MaxLifetime/2;
         }
 
         private void Update()
@@ -42,7 +41,6 @@ namespace Prototype
 
             if (lifetime < 0 && state == State.Blinking)
             {
-                Debug.Log("Switching to static");
                 state = State.Static;
                 lineRenderer.startColor = Color.red;
                 lineRenderer.endColor = Color.red;
@@ -69,11 +67,6 @@ namespace Prototype
                 else
                     yield return new WaitForSeconds(blinkTime/8);
             }
-        }
-
-        public float MaxLifetime
-        {
-            set => maxLifetime = value;
         }
     }
 }
