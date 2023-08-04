@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ArcDraw : MonoBehaviour
 {
-    private float radius = 5f;
-    
+    private const float radius = 5f;
+
     private LineRenderer lineRenderer;
     
     private GameObject startTarget;
@@ -14,6 +14,9 @@ public class ArcDraw : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer == null)
             lineRenderer = gameObject.AddComponent<LineRenderer>();
+        
+        EventManager.OnClockHandMove += Draw;
+        EventManager.OnPlayerMove += Draw;
     }
 
     private void Start()
@@ -22,7 +25,7 @@ public class ArcDraw : MonoBehaviour
         endTarget = GameObject.Find("ClockHand");
     }
 
-    public void Draw()
+    private void Draw()
     {
         float startAngle = startTarget.transform.rotation.eulerAngles.y;
         float endAngle = endTarget.transform.rotation.eulerAngles.y;
@@ -50,8 +53,7 @@ public class ArcDraw : MonoBehaviour
 
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
-        
-        
+
         lineRenderer.positionCount = pointsCount + 1;
         Vector3[] arcPoints = CalculateArcPoints(startAngle, endAngle, pointsCount);
 

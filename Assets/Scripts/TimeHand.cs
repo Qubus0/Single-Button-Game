@@ -14,6 +14,6 @@ public class TimeHand : MonoBehaviour
     private void TickForward()
     {
         gameObject.transform.Rotate(0, 360/60, 0);
-        arcDrawer.Draw();
+        EventManager.ClockHandMoved();
     }
 }
