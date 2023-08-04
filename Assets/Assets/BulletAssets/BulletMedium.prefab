@@ -153,4 +153,4 @@ MonoBehaviour:
   timeToLive: 5
   speed: 4
   telegraphTime: 1
-  telegraphLine: {fileID: 3014040238134343379, guid: 1078d0eb6a5574cf095cca68d9a0f492, type: 3}
+  telegraphLine: {fileID: 3014040238134343379, guid: fc1db8077ee304cbe80903e4b2232835, type: 3}

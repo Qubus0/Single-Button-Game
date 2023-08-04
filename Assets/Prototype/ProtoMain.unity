@@ -900,7 +900,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.20121956
+        value: 0.1345529
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1271,9 +1271,6 @@ LineRenderer:
   - {x: -0.50696397, y: 0, z: 4.823431}
   - {x: -0.52264327, y: 0, z: 4.9726095}
   - {x: 0.0000008742278, y: 0, z: 5}
-  - {x: 0.00000079554724, y: 0, z: 4.5499997}
-  - {x: 0.0000008742278, y: 0, z: 5}
-  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
