@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Prototype;
 using UnityEngine;
 
 namespace Assets
