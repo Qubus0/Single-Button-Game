@@ -16,7 +16,7 @@ public class BulletSpawner : MonoBehaviour
         
     private void Awake()
     {
-        EventManager.OnPlayerMove += OnPlayerMoved;
+        Player.OnPlayerMove += OnPlayerMoved;
     }
 
     private void Start()

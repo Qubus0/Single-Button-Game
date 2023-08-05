@@ -470,8 +470,8 @@ Transform:
   m_GameObject: {fileID: 501985520}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 0.15, y: 0.01, z: 5}
+  m_LocalPosition: {x: 0, y: -0.1, z: 1.6}
+  m_LocalScale: {x: 0.3, y: 0.01, z: 4.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1862391792}
@@ -553,8 +553,8 @@ Transform:
   m_GameObject: {fileID: 667588317}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.01, z: 0.3}
+  m_LocalPosition: {x: 0, y: -0.05, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.1, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1542230212}
@@ -954,6 +954,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 1
+  onTimeTick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1689276813}
+        m_TargetAssemblyTypeName: ClockHand, Assembly-CSharp
+        m_MethodName: TickForward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  secondHand: {fileID: 1689276813}
 --- !u!4 &1179914416
 Transform:
   m_ObjectHideFlags: 0
@@ -1100,7 +1116,7 @@ MonoBehaviour:
   bulletPatterns:
   - {fileID: 11400000, guid: fb7ac44198d1745c3bdecbd3e7b3236e, type: 2}
   - {fileID: 11400000, guid: 9b446f13c165d4ebbbf5f831d36cf9ef, type: 2}
-  difficulty: 2
+  difficulty: 1
 --- !u!4 &1542230212
 Transform:
   m_ObjectHideFlags: 0
@@ -1782,7 +1798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c285d4dbb54164c9c90c14aa22baf5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delaySeconds: 1
+  tickRotationDegrees: 6
 --- !u!4 &1689276817
 Transform:
   m_ObjectHideFlags: 0

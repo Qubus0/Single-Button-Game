@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ArcDraw : MonoBehaviour
 {
-    private const float radius = 5f;
+    private const float Radius = 5f;
 
     private LineRenderer lineRenderer;
     
@@ -15,14 +15,13 @@ public class ArcDraw : MonoBehaviour
         if (lineRenderer == null)
             lineRenderer = gameObject.AddComponent<LineRenderer>();
         
-        EventManager.OnClockHandMove += Draw;
-        EventManager.OnPlayerMove += Draw;
+        Player.OnPlayerMove += Draw;
     }
 
     private void Start()
     {
         startTarget = GameObject.Find("Player");
-        endTarget = GameObject.Find("ClockHand");
+        endTarget = GameObject.Find("ClockSecondHand");
     }
 
     private void Draw()
@@ -70,8 +69,8 @@ public class ArcDraw : MonoBehaviour
 
         for (int i = 0; i <= pointsCount; i++)
         {
-            float x = radius * Mathf.Sin(Mathf.Deg2Rad * currentAngle);
-            float z = radius * Mathf.Cos(Mathf.Deg2Rad * currentAngle);
+            float x = Radius * Mathf.Sin(Mathf.Deg2Rad * currentAngle);
+            float z = Radius * Mathf.Cos(Mathf.Deg2Rad * currentAngle);
             points[i] = new Vector3(x, 0f, z);
             currentAngle += angleStep;
         }

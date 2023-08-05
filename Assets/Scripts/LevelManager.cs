@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,13 +10,18 @@ public class LevelManager : MonoBehaviour
     private float totalPlayerRotationDegrees = 0f;
     private float totalTimeHandRotationDegrees = 0f;
     
+    public UnityEvent onTimeTick;
+    [SerializeField] private ClockHand secondHand;
+    
     private void Awake()
     {
-        EventManager.OnPlayerMove += OnPlayerMove;
-        EventManager.OnClockHandMove += OnClockHandMove;
-        EventManager.OnPlayerMove += OnMove;
-        EventManager.OnClockHandMove += OnMove;
+        Player.OnPlayerMove += OnPlayerMove;
+        Player.OnPlayerMove += OnMove;
+        
+        InvokeRepeating(nameof(TimeTick), 0, 1);
     }
+    
+    private void TimeTick() => onTimeTick?.Invoke();
     
     private void OnPlayerMove() => totalPlayerRotationDegrees += 360f / 60f;
 
