@@ -5,6 +5,8 @@ public class LevelManager : MonoBehaviour
 {
     public int difficulty = 1;
     
+    [SerializeField] private float difficultyPermanentSpeedUp = 0.1f;
+    [SerializeField] private float difficultyGrowingSpeedUpMax = 0.5f;
     private float timeScale = 1f;
     
     private float totalPlayerRotationDegrees = 0f;
@@ -40,18 +42,19 @@ public class LevelManager : MonoBehaviour
         {
             onDifficultyIncrease?.Invoke();
             difficulty++;
+            timeScale += difficultyPermanentSpeedUp;
             totalPlayerRotationDegrees = 0f;
             totalTimeHandRotationDegrees = 0f;
         }
 
         // the further the player is from the clock hand, the faster the time scale
-        float newTimeScale = Mathf.Clamp(1f + distance / 360f, 1f, 2f);
+        float newTimeScale = Mathf.Clamp(timeScale + distance / 360f, 1f, 1f + difficultyGrowingSpeedUpMax);
         
         // if the player is behind the clock hand, lower the time scale
         if (distance < 0)
-            newTimeScale = 1f - Mathf.Clamp(-distance / 360f, 0f, 0.5f);
+            newTimeScale = timeScale - Mathf.Clamp(-distance / 360f, 0f, 0.5f);
         
-        timeScale = newTimeScale;
+        
         Time.timeScale = newTimeScale;
     }
 }
