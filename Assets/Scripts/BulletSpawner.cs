@@ -12,7 +12,7 @@ public class BulletSpawner : MonoBehaviour
 
     private BulletPattern currentPattern; // todo use coroutine instead of invoke
     private BulletPattern lastPattern;
-    [SerializeField] private int difficulty = 2;
+    [SerializeField] private int difficulty = 1;
         
     private void Awake()
     {
@@ -23,6 +23,8 @@ public class BulletSpawner : MonoBehaviour
     {
         InvokeRepeating(nameof(QueuePattern), 0, delayBetweenShots);
     }
+    
+    public void IncreaseDifficulty() => difficulty++;
 
     private void OnPlayerMoved()
     {

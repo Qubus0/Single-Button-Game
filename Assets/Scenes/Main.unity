@@ -981,7 +981,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  secondHand: {fileID: 1689276813}
+  onDifficultyIncrease:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1542230208}
+        m_TargetAssemblyTypeName: BulletSpawner, Assembly-CSharp
+        m_MethodName: IncreaseDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1862391793}
+        m_TargetAssemblyTypeName: ClockHand, Assembly-CSharp
+        m_MethodName: TickForward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1179914416
 Transform:
   m_ObjectHideFlags: 0
@@ -1836,6 +1862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1862391792}
+  - component: {fileID: 1862391793}
   m_Layer: 0
   m_Name: ClockDifficultyHand
   m_TagString: Untagged
@@ -1859,6 +1886,19 @@ Transform:
   - {fileID: 501985521}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1862391793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862391791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c285d4dbb54164c9c90c14aa22baf5df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tickRotationDegrees: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

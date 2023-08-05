@@ -11,8 +11,8 @@ public class LevelManager : MonoBehaviour
     private float totalTimeHandRotationDegrees = 0f;
     
     public UnityEvent onTimeTick;
-    [SerializeField] private ClockHand secondHand;
-    
+    public UnityEvent onDifficultyIncrease;
+
     private void Awake()
     {
         Player.OnPlayerMove += OnPlayerMove;
@@ -21,8 +21,12 @@ public class LevelManager : MonoBehaviour
         InvokeRepeating(nameof(TimeTick), 0, 1);
     }
     
-    private void TimeTick() => onTimeTick?.Invoke();
-    
+    private void TimeTick()
+    {
+        OnClockHandMove();
+        onTimeTick?.Invoke();
+    }
+
     private void OnPlayerMove() => totalPlayerRotationDegrees += 360f / 60f;
 
     private void OnClockHandMove() => totalTimeHandRotationDegrees += 360f / 60f;
@@ -34,11 +38,11 @@ public class LevelManager : MonoBehaviour
         // if the player overtakes the clock hand, increase the difficulty and reset the counters
         if (distance > 360f)
         {
+            onDifficultyIncrease?.Invoke();
             difficulty++;
             totalPlayerRotationDegrees = 0f;
             totalTimeHandRotationDegrees = 0f;
         }
-
 
         // the further the player is from the clock hand, the faster the time scale
         float newTimeScale = Mathf.Clamp(1f + distance / 360f, 1f, 2f);
