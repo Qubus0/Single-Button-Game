@@ -3,7 +3,6 @@ using UnityEngine;
 public class TimeHand : MonoBehaviour
 {
     [SerializeField] private float delaySeconds = 1;
-    [SerializeField] private ArcDraw arcDrawer;
 
     private void Start()
     {
@@ -13,7 +12,7 @@ public class TimeHand : MonoBehaviour
     // Update is called once per frame
     private void TickForward()
     {
-        gameObject.transform.Rotate(0, 360/60, 0);
+        gameObject.transform.Rotate(0, 360f/6f, 0);
         EventManager.ClockHandMoved();
     }
 }
