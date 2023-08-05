@@ -18,7 +18,9 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         Player.OnPlayerMove += OnPlayerMove;
+        Player.OnPlayerMoveBackwards += OnPlayerMoveBackwards;
         Player.OnPlayerMove += OnMove;
+        Player.OnPlayerMoveBackwards += OnMove;
         
         InvokeRepeating(nameof(TimeTick), 0, 1);
     }
@@ -30,6 +32,8 @@ public class LevelManager : MonoBehaviour
     }
 
     private void OnPlayerMove() => totalPlayerRotationDegrees += 360f / 60f;
+    
+    private void OnPlayerMoveBackwards() => totalPlayerRotationDegrees -= 360f / 60f;
 
     private void OnClockHandMove() => totalTimeHandRotationDegrees += 360f / 60f;
 
