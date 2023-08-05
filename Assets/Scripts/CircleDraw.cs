@@ -1,11 +1,16 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CircleDraw : MonoBehaviour
 {
     [SerializeField] private float radius = 1f;
     [SerializeField] private float notchOffset = 0f;
-    [SerializeField] private float segmentDegrees = 360f/60f;
+    [SerializeField] private float segmentDegrees = 360f / 60f;
+        
+    [SerializeField] private List<int> notchNthSegment = new();
+    
 
     private LineRenderer lineRenderer;
     
@@ -47,15 +52,21 @@ public class CircleDraw : MonoBehaviour
 
             if (notchOffset != 0)
             {
-                float notchRadius = radius + notchOffset;
-                if (i % 5 == 0)
-                    notchRadius += notchOffset;
-                if (i % 15 == 0)
-                    notchRadius += notchOffset;
-                float notchX = notchRadius * Mathf.Sin(Mathf.Deg2Rad * currentAngle);
-                float notchY = notchRadius * Mathf.Cos(Mathf.Deg2Rad * currentAngle);
-                points.Add(new Vector3(notchX, 0f, notchY));
-                points.Add(new Vector3(x, 0f, z));
+                float notchRadius = radius;
+
+                if (!notchNthSegment.Count.Equals(0))
+                {
+                    notchRadius += notchNthSegment.Where(nthSegment => i % nthSegment == 0).Sum(nthSegment => notchOffset);
+
+                    if (Math.Abs(notchRadius - radius) > 0.01)
+                    {
+                        float notchX = notchRadius * Mathf.Sin(Mathf.Deg2Rad * currentAngle);
+                        float notchY = notchRadius * Mathf.Cos(Mathf.Deg2Rad * currentAngle);
+                        points.Add(new Vector3(notchX, 0f, notchY));
+                        points.Add(new Vector3(x, 0f, z));
+                    }
+                }
+
             }
 
             currentAngle += angleStep;
