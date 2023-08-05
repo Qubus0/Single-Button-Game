@@ -24,7 +24,7 @@ public class ArcDraw : MonoBehaviour
         endTarget = GameObject.Find("ClockSecondHand");
     }
 
-    private void Draw()
+    public void Draw()
     {
         float startAngle = startTarget.transform.rotation.eulerAngles.y;
         float endAngle = endTarget.transform.rotation.eulerAngles.y;

@@ -969,6 +969,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1592790886}
+        m_TargetAssemblyTypeName: ArcDraw, Assembly-CSharp
+        m_MethodName: Draw
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   secondHand: {fileID: 1689276813}
 --- !u!4 &1179914416
 Transform:
@@ -1450,7 +1462,7 @@ GameObject:
   - component: {fileID: 1637101785}
   - component: {fileID: 1637101783}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: ClockFace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
