@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,6 +6,12 @@ public class LevelManager : MonoBehaviour
 {
     public int difficulty = 1;
     
+    [SerializeField] private GameObject healthClockHand; 
+    private ClockHand clockHandScript;
+    
+    [SerializeField] private GameObject player;
+    private Health playerHealth;
+
     [SerializeField] private float difficultyPermanentSpeedUp = 0.1f;
     [SerializeField] private float difficultyGrowingSpeedUpMax = 0.5f;
     private float timeScale = 1f;
@@ -22,9 +29,14 @@ public class LevelManager : MonoBehaviour
         Player.OnPlayerMove += OnMove;
         Player.OnPlayerMoveBackwards += OnMove;
         
+        playerHealth = player.GetComponent<Health>();
+        playerHealth.OnHealthChanged += OnPlayerHealthChanged;
+        
+        clockHandScript = healthClockHand.GetComponent<ClockHand>();
+
         InvokeRepeating(nameof(TimeTick), 0, 1);
     }
-    
+
     private void TimeTick()
     {
         OnClockHandMove();
@@ -36,6 +48,28 @@ public class LevelManager : MonoBehaviour
     private void OnPlayerMoveBackwards() => totalPlayerRotationDegrees -= 360f / 60f;
 
     private void OnClockHandMove() => totalTimeHandRotationDegrees += 360f / 60f;
+    
+    private void OnPlayerHealthChanged(int health)
+    {
+        // update ui
+        float shownHealth = clockHandScript.GetCurrentTick();
+        float diff = shownHealth - health;
+
+        while (diff != 0)
+        {
+            shownHealth = clockHandScript.GetCurrentTick();
+            diff = shownHealth - health;
+            
+            if (diff > 0)
+                clockHandScript.TickBackward();
+            else if (diff < 0)
+                clockHandScript.TickForward();
+        }
+
+        // restart menu
+        // if (health <= 0)
+        //     Time.timeScale = 0f;
+    }
 
     private void OnMove()
     {

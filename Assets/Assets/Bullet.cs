@@ -6,7 +6,7 @@ namespace Assets
     {
         public int Difficulty = 0;
 
-        [SerializeField] private float damage = 1;
+        [SerializeField] private int damage = 1;
         [SerializeField] private float timeToLive = 5;
         [SerializeField] public float speed = 2;
     
@@ -43,7 +43,8 @@ namespace Assets
 
         private void DealDamage(GameObject otherGameObject)
         {
-            // gameObject.GetComponent<Health>().TakeDamage(damage);
+            if (otherGameObject.TryGetComponent(out Health health))
+                health.TakeDamage(damage);
         }
     }
 }

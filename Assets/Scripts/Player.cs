@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private bool spacePressed = false;
     private float spaceHeldTime = 0f;
     [SerializeField] private float holdThreshold = 0.3f;
+    
+    private int damage = 1;
 
     private void Update()
     {
@@ -40,6 +42,17 @@ public class Player : MonoBehaviour
         if (spacePressed)
             spaceHeldTime += Time.deltaTime;
     }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        DealDamage(collision.gameObject);
+    }
+    
+    private void DealDamage(GameObject otherGameObject)
+    {
+        if (otherGameObject.TryGetComponent(out Health health))
+            health.TakeDamage(damage);
+    }
 
     // private void Update()
     // {
@@ -64,11 +77,10 @@ public class Player : MonoBehaviour
         gameObject.transform.Rotate(0, 360f / 60f, 0);
         OnPlayerMove?.Invoke();
     }
-    
-    public void MoveBackwards()
+
+    private void MoveBackwards()
     {
         gameObject.transform.Rotate(0, -360f / 60f, 0);
         OnPlayerMoveBackwards?.Invoke();
     }
-    
 }
