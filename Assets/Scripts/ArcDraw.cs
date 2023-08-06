@@ -6,28 +6,17 @@ public class ArcDraw : MonoBehaviour
 
     private LineRenderer lineRenderer;
     
-    private GameObject startTarget;
-    private GameObject endTarget;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer == null)
             lineRenderer = gameObject.AddComponent<LineRenderer>();
-        
-        Player.OnPlayerMove += Draw;
+
     }
 
-    private void Start()
+    public void Draw(float startAngle, float endAngle)
     {
-        startTarget = GameObject.Find("Player");
-        endTarget = GameObject.Find("ClockSecondHand");
-    }
-
-    public void Draw()
-    {
-        float startAngle = startTarget.transform.rotation.eulerAngles.y;
-        float endAngle = endTarget.transform.rotation.eulerAngles.y;
         float angle = endAngle - startAngle;
         // if the angle is negative, flip start and end
         if (angle < 0)
@@ -44,10 +33,10 @@ public class ArcDraw : MonoBehaviour
 
         var color = pointsCount switch
         {
-            >= 10 => Color.red,
-            >= 6 => new Color(1f, 0.5f, 0f),
-            >= 4 => Color.yellow,
-            _ => Color.white
+            >= (360 / 60) * 270 => Color.red,
+            >= (360 / 60) * 135 => new Color(1f, 0.5f, 0f),
+            >= (360 / 60) * 45 => Color.yellow,
+            _ => new Color(1f, 1f, .7f)
         };
 
         lineRenderer.startColor = color;
