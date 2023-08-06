@@ -1,8 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ArcDraw : MonoBehaviour
 {
-    private const float Radius = 5f;
+    [SerializeField] private float radius = 5f;
+    [FormerlySerializedAs("arcSegmentLength")] public float segmentDegrees = 360f/60f;
+
+    [SerializeField] private List<float> colorAngles = new();
+    [SerializeField] private List<Color> colors = new();
 
     private LineRenderer lineRenderer;
     
@@ -18,27 +24,22 @@ public class ArcDraw : MonoBehaviour
     public void Draw(float startAngle, float endAngle)
     {
         float angle = endAngle - startAngle;
-        // if the angle is negative, flip start and end
-        if (angle < 0)
-        {
-            (startAngle, endAngle) = (endAngle, startAngle);
-            angle = -angle;
-        }
         
         // calculate points count - one point every 60th of a circle
-        int pointsCount = Mathf.RoundToInt(angle / (360f / 60f));
+        int pointsCount = Mathf.RoundToInt(angle / segmentDegrees);
         lineRenderer.enabled = pointsCount >= 2;
         if (pointsCount < 2)
             return;
 
-        var color = pointsCount switch
+        var color = Color.white;
+        for (int i = 0; i < colorAngles.Count; i++)
         {
-            // one segment is 6 degrees (360 / 60)
-            >=  180 / 6 => Color.red,
-            >=  120 / 6 => new Color(1f, 0.5f, 0f),
-            >=  60 / 6 => Color.yellow,
-            _ => new Color(1f, 1f, .7f)
-        };
+            if (pointsCount >= colorAngles[i] / segmentDegrees)
+            {
+                color = colors[i];
+                break;
+            }
+        }
 
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
@@ -53,14 +54,14 @@ public class ArcDraw : MonoBehaviour
     private Vector3[] CalculateArcPoints(float startAngle, float endAngle, int pointsCount)
     {
         var points = new Vector3[pointsCount + 1];
-        float totalAngle = (endAngle - startAngle) % 360f;
+        float totalAngle = (endAngle - startAngle);
         float angleStep = totalAngle / pointsCount;
         float currentAngle = startAngle;
 
         for (int i = 0; i <= pointsCount; i++)
         {
-            float x = Radius * Mathf.Sin(Mathf.Deg2Rad * currentAngle);
-            float z = Radius * Mathf.Cos(Mathf.Deg2Rad * currentAngle);
+            float x = radius * Mathf.Sin(Mathf.Deg2Rad * currentAngle);
+            float z = radius * Mathf.Cos(Mathf.Deg2Rad * currentAngle);
             points[i] = new Vector3(x, 0f, z);
             currentAngle += angleStep;
         }

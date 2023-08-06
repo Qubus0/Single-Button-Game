@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public int difficulty = 1;
     public int score = 0;
 
+    [SerializeField] private ArcDraw healthClockArcDraw;
     [SerializeField] private GameObject healthClockHand;
     private ClockHand clockHandScript;
 
@@ -90,6 +91,7 @@ public class LevelManager : MonoBehaviour
             else if (diff < 0)
                 clockHandScript.TickForward();
         }
+        healthClockArcDraw.Draw(0, health * 6 * healthClockArcDraw.segmentDegrees);
 
         // restart menu
         if (health <= 0)
