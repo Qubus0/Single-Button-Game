@@ -51,6 +51,7 @@ public class LevelManager : MonoBehaviour
     private void TimeTick()
     {
         OnClockHandMove();
+        OnMove();
         onTimeTick?.Invoke();
     }
 
