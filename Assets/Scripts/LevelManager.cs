@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Assets;
 using TMPro;
@@ -26,6 +27,7 @@ public class LevelManager : MonoBehaviour
 
     private float totalPlayerRotationDegrees = 0f;
     private float totalTimeHandRotationDegrees = 0f;
+    private float arcStartAngle = 0f;
 
     public UnityEvent onTimeTick;
     public UnityEvent onDifficultyIncrease;
@@ -98,7 +100,45 @@ public class LevelManager : MonoBehaviour
             // ui.SetActive(true);
         }
     }
+    
+    private void OnMove()
+    {
+        float distance = totalPlayerRotationDegrees - totalTimeHandRotationDegrees;
 
+        if (distance < 0)
+            arcDraw.Draw(arcStartAngle + totalPlayerRotationDegrees, arcStartAngle + totalTimeHandRotationDegrees);
+        else
+            arcDraw.Draw(arcStartAngle + totalTimeHandRotationDegrees, arcStartAngle + totalPlayerRotationDegrees);
+
+        // if the player overtakes the clock hand, increase the difficulty and reset the counters
+        if (distance >= 360f)
+        {
+            playerHealth.FullHeal();
+            onDifficultyIncrease?.Invoke();
+            difficulty++;
+            timeScale += difficultyPermanentSpeedUp;
+            arcStartAngle += totalTimeHandRotationDegrees;
+            totalPlayerRotationDegrees = 0f;
+            totalTimeHandRotationDegrees = 0f;
+        }
+
+        // the further the player is from the clock hand, the faster the time scale
+        float newTimeScale = Mathf.Clamp(timeScale + distance / 360f, 1f, 0.5f + difficultyGrowingSpeedUpMax);
+
+        // if the player is behind the clock hand, lower the time scale
+        if (distance < 0)
+            newTimeScale = timeScale - Mathf.Clamp(-distance / 180f, 0f, 0.7f);
+
+
+        Time.timeScale = newTimeScale;
+    }
+
+    public void Restart()
+    {
+        // Time.timeScale = 1f;
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
     private IEnumerator LerpTimeScaleToZero()
     {
         const float deathLerpDuration = 3f;
@@ -121,41 +161,5 @@ public class LevelManager : MonoBehaviour
 
         // Ensure that the time scale is exactly 0 when the coroutine finishes
         Time.timeScale = 0f;
-    }
-
-    private void OnMove()
-    {
-        float distance = totalPlayerRotationDegrees - totalTimeHandRotationDegrees;
-
-        if (distance < 0)
-            arcDraw.Draw(totalPlayerRotationDegrees, totalTimeHandRotationDegrees);
-        else
-            arcDraw.Draw(totalTimeHandRotationDegrees, totalPlayerRotationDegrees);
-
-        // if the player overtakes the clock hand, increase the difficulty and reset the counters
-        if (distance > 360f)
-        {
-            onDifficultyIncrease?.Invoke();
-            difficulty++;
-            timeScale += difficultyPermanentSpeedUp;
-            totalPlayerRotationDegrees = 0f;
-            totalTimeHandRotationDegrees = 0f;
-        }
-
-        // the further the player is from the clock hand, the faster the time scale
-        float newTimeScale = Mathf.Clamp(timeScale + distance / 360f, 1f, 0.5f + difficultyGrowingSpeedUpMax);
-
-        // if the player is behind the clock hand, lower the time scale
-        if (distance < 0)
-            newTimeScale = timeScale - Mathf.Clamp(-distance / 180f, 0f, 0.7f);
-
-
-        Time.timeScale = newTimeScale;
-    }
-
-    public void Restart()
-    {
-        // Time.timeScale = 1f;
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

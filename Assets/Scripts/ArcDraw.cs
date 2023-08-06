@@ -33,9 +33,10 @@ public class ArcDraw : MonoBehaviour
 
         var color = pointsCount switch
         {
-            >= (360 / 60) * 270 => Color.red,
-            >= (360 / 60) * 135 => new Color(1f, 0.5f, 0f),
-            >= (360 / 60) * 45 => Color.yellow,
+            // one segment is 6 degrees (360 / 60)
+            >=  180 / 6 => Color.red,
+            >=  120 / 6 => new Color(1f, 0.5f, 0f),
+            >=  60 / 6 => Color.yellow,
             _ => new Color(1f, 1f, .7f)
         };
 
