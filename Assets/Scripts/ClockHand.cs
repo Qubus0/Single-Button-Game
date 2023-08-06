@@ -13,19 +13,19 @@ public class ClockHand : MonoBehaviour
     
     public void TickForward()
     {
-        RotateByDegrees(tickRotationDegrees);
         currentTick++;
+        RotateToCurrentTick();
     }
 
     public void TickBackward()
     {
-        RotateByDegrees(-tickRotationDegrees);
         currentTick--;
+        RotateToCurrentTick();
     }
 
-    private void RotateByDegrees(float degrees)
+    private void RotateToCurrentTick()
     {
-        targetRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, degrees, 0));
+        targetRotation = Quaternion.Euler(new Vector3(0, tickRotationDegrees * currentTick, 0));
         initialRotation = transform.rotation;
         lerpTime = 0f;
         StartCoroutine(InterpolateRotation());
