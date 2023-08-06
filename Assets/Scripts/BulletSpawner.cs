@@ -9,7 +9,7 @@ public class BulletSpawner : MonoBehaviour
 
     [SerializeField] private float delayBetweenShots = 1;
 
-        [SerializeField] private List<BulletPattern> bulletPatterns = new();
+    [SerializeField] private List<BulletPattern> bulletPatterns = new();
 
     private const float AngleStep = 360f / 60f;
 
@@ -17,7 +17,7 @@ public class BulletSpawner : MonoBehaviour
     private BulletPattern currentPattern; // todo use coroutine instead of invoke
     private BulletPattern lastPattern;
     [SerializeField] private int difficulty = 1;
-        
+
     private void Awake()
     {
         Player.OnPlayerMove += OnPlayerMoved;
@@ -33,7 +33,7 @@ public class BulletSpawner : MonoBehaviour
 
         InvokeRepeating(nameof(QueuePattern), 0, delayBetweenShots);
     }
-    
+
     private void LoadBulletPatterns()
     {
         // Clear the list to avoid duplicates when reloading in the Editor
@@ -43,7 +43,6 @@ public class BulletSpawner : MonoBehaviour
 
         // Load all GameObject assets in the specified folder
         string[] guids = AssetDatabase.FindAssets("t:BulletPattern", new[] { folderPath });
-        Debug.Log($"Found {guids.Length} bullet patterns");
 
         // Add loaded GameObject assets to the bulletPatterns list
         foreach (string guid in guids)
@@ -57,7 +56,7 @@ public class BulletSpawner : MonoBehaviour
         }
     }
 
-    
+
     public void IncreaseDifficulty() => difficulty++;
 
     private void OnPlayerMoved()
@@ -69,7 +68,7 @@ public class BulletSpawner : MonoBehaviour
     {
         // filter out all patterns that are too difficult
         List<BulletPattern> validPatterns = bulletPatterns.FindAll(pattern => pattern.patternDifficulty <= difficulty);
-            
+
         // select a random bullet pattern
         currentPattern = validPatterns[Random.Range(0, validPatterns.Count)];
         // if the pattern is the same as the last one, re roll once
@@ -77,7 +76,7 @@ public class BulletSpawner : MonoBehaviour
             currentPattern = validPatterns[Random.Range(0, validPatterns.Count)];
         lastPattern = currentPattern;
         currentPattern.SetTargetDifficulty(difficulty);
-            
+
         TelegraphPattern();
         Invoke(nameof(ShootPattern), currentPattern.TelegraphTime);
     }
@@ -108,7 +107,7 @@ public class BulletSpawner : MonoBehaviour
     {
         float targetAngle = target.transform.rotation.eulerAngles.y;
         targetAngle += currentPattern.patternStartingIndex * AngleStep;
-        
+
         foreach (bool shouldShoot in currentPattern.pattern)
         {
             if (shouldShoot)
