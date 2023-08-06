@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -11,6 +14,8 @@ public class LevelManager : MonoBehaviour
     
     [SerializeField] private GameObject player;
     private Health playerHealth;
+    
+    [SerializeField] private GameObject ui;
 
     [SerializeField] private float difficultyPermanentSpeedUp = 0.1f;
     [SerializeField] private float difficultyGrowingSpeedUpMax = 0.5f;
@@ -67,8 +72,38 @@ public class LevelManager : MonoBehaviour
         }
 
         // restart menu
-        // if (health <= 0)
-        //     Time.timeScale = 0f;
+        if (health <= 0)
+        {
+            StartCoroutine(LerpTimeScaleToZero());
+
+            // Restart();
+            // ui.SetActive(true);
+        }
+            
+    }
+    
+    private IEnumerator LerpTimeScaleToZero()
+    {
+        const float deathLerpDuration = 3f;
+        // Store the initial time scale to use as the starting value
+        float initialTimeScale = Time.timeScale;
+
+        // The current time in the lerp process
+        float currentTime = 0f;
+
+        while (currentTime < deathLerpDuration)
+        {
+            currentTime += Time.unscaledDeltaTime; // Use unscaledDeltaTime to ignore Time.timeScale
+            float t = Mathf.Clamp01(currentTime / deathLerpDuration);
+
+            // Lerp the time scale from its initial value to 0
+            Time.timeScale = Mathf.Lerp(initialTimeScale, 0f, t);
+
+            yield return null;
+        }
+
+        // Ensure that the time scale is exactly 0 when the coroutine finishes
+        Time.timeScale = 0f;
     }
 
     private void OnMove()
@@ -94,5 +129,11 @@ public class LevelManager : MonoBehaviour
         
         
         Time.timeScale = newTimeScale;
+    }
+    
+    public void Restart()
+    {
+        // Time.timeScale = 1f;
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
