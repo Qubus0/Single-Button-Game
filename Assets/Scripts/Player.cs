@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         {
             if (spaceHeldTime >= holdThreshold)
                 MoveBackwards();
-            else
+            else if (spacePressed)
                 Move();
 
             spacePressed = false;
