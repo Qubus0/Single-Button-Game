@@ -1645,9 +1645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1472656585}
   delayBetweenShots: 3
-  bulletPatterns:
-  - {fileID: 11400000, guid: fb7ac44198d1745c3bdecbd3e7b3236e, type: 2}
-  - {fileID: 11400000, guid: 9b446f13c165d4ebbbf5f831d36cf9ef, type: 2}
+  bulletPatterns: []
   difficulty: 1
 --- !u!4 &1542230212
 Transform:

@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5cdfb8ed3cd4ef8a08dbe410f671f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Difficulty: 2
+  Difficulty: 3
   damage: 1
   timeToLive: 5
-  speed: 6
+  speed: 8
   telegraphTime: 2
   telegraphLine: {fileID: 3014040238134343379, guid: 1078d0eb6a5574cf095cca68d9a0f492, type: 3}
 --- !u!54 &2335812179487716388

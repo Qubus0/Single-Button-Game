@@ -8,6 +8,7 @@ namespace Assets
     public class BulletPattern : ScriptableObject
     {
         public int patternDifficulty = 1;
+        public int patternStartingIndex = 0;
         private int targetDifficulty = 1;
 
         [SerializeField] public List<Bullet> bulletTypes = new();

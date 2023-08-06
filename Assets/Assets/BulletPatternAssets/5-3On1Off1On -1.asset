@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51285dddaf69a4aad830a0401398cfa1, type: 3}
-  m_Name: 5-1On1Off
+  m_Name: 5-3On1Off1On -1
   m_EditorClassIdentifier: 
-  patternDifficulty: 1
-  patternStartingIndex: 0
+  patternDifficulty: 3
+  patternStartingIndex: -1
   bulletTypes:
   - {fileID: 994001107143660821, guid: a201fec40bc3c44dc9b329ad0af87fb7, type: 3}
   - {fileID: 994001107143660821, guid: ff76e857aad3b434a95044e6b2007060, type: 3}
-  pattern: 0100010001
+  pattern: 0101010001

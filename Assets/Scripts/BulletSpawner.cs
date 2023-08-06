@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Assets;
+using UnityEditor;
 using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
@@ -8,7 +9,10 @@ public class BulletSpawner : MonoBehaviour
 
     [SerializeField] private float delayBetweenShots = 1;
 
-    [SerializeField] private List<BulletPattern> bulletPatterns = new();
+        [SerializeField] private List<BulletPattern> bulletPatterns = new();
+
+    private const float AngleStep = 360f / 60f;
+
 
     private BulletPattern currentPattern; // todo use coroutine instead of invoke
     private BulletPattern lastPattern;
@@ -22,8 +26,37 @@ public class BulletSpawner : MonoBehaviour
 
     private void Start()
     {
+        // if there are not bullet patterns set, get them from Assets/Assets/BulletPatternAssets
+        LoadBulletPatterns();
+        if (bulletPatterns.Count == 0)
+            Debug.LogError("No bullet patterns found");
+
         InvokeRepeating(nameof(QueuePattern), 0, delayBetweenShots);
     }
+    
+    private void LoadBulletPatterns()
+    {
+        // Clear the list to avoid duplicates when reloading in the Editor
+        bulletPatterns.Clear();
+
+        string folderPath = "Assets/Assets/BulletPatternAssets";
+
+        // Load all GameObject assets in the specified folder
+        string[] guids = AssetDatabase.FindAssets("t:BulletPattern", new[] { folderPath });
+        Debug.Log($"Found {guids.Length} bullet patterns");
+
+        // Add loaded GameObject assets to the bulletPatterns list
+        foreach (string guid in guids)
+        {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            BulletPattern pattern = AssetDatabase.LoadAssetAtPath<BulletPattern>(assetPath);
+            if (pattern != null)
+            {
+                bulletPatterns.Add(pattern);
+            }
+        }
+    }
+
     
     public void IncreaseDifficulty() => difficulty++;
 
@@ -52,6 +85,8 @@ public class BulletSpawner : MonoBehaviour
     private void TelegraphPattern()
     {
         float targetAngle = 0f;
+        targetAngle += currentPattern.patternStartingIndex * AngleStep;
+
         foreach (bool shot in currentPattern.pattern)
         {
             if (shot)
@@ -63,7 +98,7 @@ public class BulletSpawner : MonoBehaviour
                 line.SetPosition(1, lineDirection * 6);
             }
 
-            targetAngle += 360f / 60f;
+            targetAngle += AngleStep;
         }
 
         // reset rotation
@@ -72,12 +107,14 @@ public class BulletSpawner : MonoBehaviour
     private void ShootPattern()
     {
         float targetAngle = target.transform.rotation.eulerAngles.y;
+        targetAngle += currentPattern.patternStartingIndex * AngleStep;
+        
         foreach (bool shouldShoot in currentPattern.pattern)
         {
             if (shouldShoot)
                 ShootBullet(targetAngle);
             // rotate 1/60th of a circle for every shot
-            targetAngle += 360f / 60f;
+            targetAngle += AngleStep;
         }
     }
 

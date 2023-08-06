@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1206749862644315300}
   - component: {fileID: 4732876150229111174}
   m_Layer: 3
-  m_Name: BulletSlow
+  m_Name: BulletSlowDoubleD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,12 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5cdfb8ed3cd4ef8a08dbe410f671f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Difficulty: 0
-  damage: 1
+  Difficulty: 2
+  damage: 2
   timeToLive: 5
-  speed: 4
-  telegraphTime: 1
-  telegraphLine: {fileID: 3014040238134343379, guid: dd0bcbd595b1041eb902f42fd2c934d4, type: 3}
+  speed: 2
+  telegraphTime: 2
+  telegraphLine: {fileID: 3014040238134343379, guid: 6779e23dfff5141c897e9d3245c7fbbd, type: 3}
 --- !u!54 &2335812179487716388
 Rigidbody:
   m_ObjectHideFlags: 0
