@@ -1,4 +1,3 @@
-using Assets;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,4 +15,3 @@ namespace Editor
         }
     }
 }
-

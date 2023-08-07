@@ -5,14 +5,13 @@ using UnityEngine;
 public class BulletPatternLoader: MonoBehaviour
 {
     [SerializeField] private BulletSpawner bulletSpawner;
+    [SerializeField] string folderPath = "Assets/Assets/BulletPatternAssets";
         
     public void LoadBulletPatterns()
     {
         // Clear the list to avoid duplicates when reloading in the Editor
         bulletSpawner.bulletPatterns.Clear();
-    
-        string folderPath = "Assets/Assets/BulletPatternAssets";
-    
+
         // Load all GameObject assets in the specified folder
         string[] guids = AssetDatabase.FindAssets("t:BulletPattern", new[] { folderPath });
     

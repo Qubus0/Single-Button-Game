@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             if (spaceHeldTime >= holdThreshold)
-                MoveBackwards();
+                OnHold();
             else if (spacePressed)
-                Move();
+                OnRelease();
 
             spacePressed = false;
             spaceHeldTime = 0f;
@@ -41,6 +41,16 @@ public class Player : MonoBehaviour
         // Increment time if the Space key is held down
         if (spacePressed)
             spaceHeldTime += Time.deltaTime;
+    }
+    
+    private void OnHold()
+    {
+        MoveBackwards();
+    }
+    
+    private void OnRelease()
+    {
+        Move();
     }
     
     private void OnCollisionEnter(Collision collision)

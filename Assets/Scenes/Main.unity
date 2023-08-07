@@ -2029,6 +2029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpawner: {fileID: 1542230208}
+  folderPath: Assets/Assets/BulletPatternAssets
 --- !u!1 &1566962956
 GameObject:
   m_ObjectHideFlags: 0
