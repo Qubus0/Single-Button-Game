@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Assets;
-using UnityEditor;
 using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
@@ -9,7 +8,7 @@ public class BulletSpawner : MonoBehaviour
 
     [SerializeField] private float delayBetweenShots = 1;
 
-    [SerializeField] private List<BulletPattern> bulletPatterns = new();
+    [SerializeField] public List<BulletPattern> bulletPatterns = new();
 
     private const float AngleStep = 360f / 60f;
 
@@ -26,34 +25,10 @@ public class BulletSpawner : MonoBehaviour
 
     private void Start()
     {
-        // if there are not bullet patterns set, get them from Assets/Assets/BulletPatternAssets
-        LoadBulletPatterns();
         if (bulletPatterns.Count == 0)
             Debug.LogError("No bullet patterns found");
 
         InvokeRepeating(nameof(QueuePattern), 0, delayBetweenShots);
-    }
-
-    private void LoadBulletPatterns()
-    {
-        // Clear the list to avoid duplicates when reloading in the Editor
-        bulletPatterns.Clear();
-
-        string folderPath = "Assets/Assets/BulletPatternAssets";
-
-        // Load all GameObject assets in the specified folder
-        string[] guids = AssetDatabase.FindAssets("t:BulletPattern", new[] { folderPath });
-
-        // Add loaded GameObject assets to the bulletPatterns list
-        foreach (string guid in guids)
-        {
-            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            BulletPattern pattern = AssetDatabase.LoadAssetAtPath<BulletPattern>(assetPath);
-            if (pattern != null)
-            {
-                bulletPatterns.Add(pattern);
-            }
-        }
     }
 
 

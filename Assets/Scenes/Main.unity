@@ -1958,6 +1958,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1542230212}
   - component: {fileID: 1542230208}
+  - component: {fileID: 1542230213}
   m_Layer: 0
   m_Name: BulletSpawner
   m_TagString: Untagged
@@ -1979,7 +1980,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1472656585}
   delayBetweenShots: 3
-  bulletPatterns: []
+  bulletPatterns:
+  - {fileID: 11400000, guid: f845ebb146d9f4d30af47d46775d5fbc, type: 2}
+  - {fileID: 11400000, guid: fb7ac44198d1745c3bdecbd3e7b3236e, type: 2}
+  - {fileID: 11400000, guid: 485a3613250e74b7b97551bedc7938e8, type: 2}
+  - {fileID: 11400000, guid: 1f02e362a9a244c1cbc35d0d075ebbd9, type: 2}
+  - {fileID: 11400000, guid: 7cc53ed0a57de41cd81528e8860417e6, type: 2}
+  - {fileID: 11400000, guid: 84781f02973364a0a8cf708ec7762d80, type: 2}
+  - {fileID: 11400000, guid: 9b446f13c165d4ebbbf5f831d36cf9ef, type: 2}
+  - {fileID: 11400000, guid: 9bf60cc7c330a4eaca60cf6178e187e7, type: 2}
+  - {fileID: 11400000, guid: 31a1336022a594d7abe1d0af2c8ded96, type: 2}
+  - {fileID: 11400000, guid: 27950799ed12d4a9d83016b50cfbb426, type: 2}
+  - {fileID: 11400000, guid: 478a9ba62113241408cd8a97e1fe8ecd, type: 2}
+  - {fileID: 11400000, guid: 5f76f57bc04eb42fe9fa880138d983d8, type: 2}
+  - {fileID: 11400000, guid: ef64c4678c09d46a2a8f79ed872a15b8, type: 2}
+  - {fileID: 11400000, guid: 02855167197044dc395f669da152922a, type: 2}
+  - {fileID: 11400000, guid: cc46623d56423400ba3f6d9afb02640c, type: 2}
+  - {fileID: 11400000, guid: b94e9a44a31cc456896820e00fb6e153, type: 2}
+  - {fileID: 11400000, guid: be042876b7ae446e2b8323a492c56a25, type: 2}
+  - {fileID: 11400000, guid: 724ef04b5d1ee4cec91060875e759ee9, type: 2}
   difficulty: 1
 --- !u!4 &1542230212
 Transform:
@@ -1997,6 +2016,19 @@ Transform:
   - {fileID: 667588318}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542230213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542230207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eeb745253c4ebd9f759e32f1876869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpawner: {fileID: 1542230208}
 --- !u!1 &1566962956
 GameObject:
   m_ObjectHideFlags: 0

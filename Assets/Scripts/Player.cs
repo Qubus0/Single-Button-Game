@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     private bool spacePressed = false;
     private float spaceHeldTime = 0f;
-    [SerializeField] private float holdThreshold = 0.3f;
+    [SerializeField] private float holdThreshold = 0.2f;
     
     private int damage = 1;
 
