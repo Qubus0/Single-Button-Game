@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Assets;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BulletSpawner : MonoBehaviour
 {
@@ -17,10 +19,16 @@ public class BulletSpawner : MonoBehaviour
     private BulletPattern lastPattern;
     [SerializeField] private int difficulty = 1;
 
-    private void Awake()
+    private void OnEnable()
     {
         Player.OnPlayerMove += OnPlayerMoved;
         Player.OnPlayerMoveBackwards += OnPlayerMoved;
+    }
+
+    private void OnDisable()
+    {
+        Player.OnPlayerMove -= OnPlayerMoved;
+        Player.OnPlayerMoveBackwards -= OnPlayerMoved;
     }
 
     private void Start()

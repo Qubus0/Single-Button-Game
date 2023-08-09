@@ -4,6 +4,7 @@ using Assets;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -18,12 +19,14 @@ public class LevelManager : MonoBehaviour
     private Health playerHealth;
 
     [SerializeField] private GameObject ui;
-    [SerializeField] private GameObject scoreText;
+    [SerializeField] private TMP_Text scoreText;
+    
 
     [SerializeField] private ArcDraw arcDraw;
 
     [SerializeField] private float difficultyPermanentSpeedUp = 0.1f;
     [SerializeField] private float difficultyGrowingSpeedUpMax = 0.5f;
+    [SerializeField] private float initialTimeScale = 1f;
     private float timeScale = 1f;
 
     private float totalPlayerRotationDegrees = 0f;
@@ -35,20 +38,36 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        Player.OnPlayerMove += OnPlayerMove;
-        Player.OnPlayerMoveBackwards += OnPlayerMoveBackwards;
-        Player.OnPlayerMove += OnMove;
-        Player.OnPlayerMoveBackwards += OnMove;
-
         playerHealth = player.GetComponent<Health>();
         playerHealth.OnHealthChanged += OnPlayerHealthChanged;
-
-        Obstacle.OnObstacleDestroyed += OnObstacleDestroyed;
 
         clockHandScript = healthClockHand.GetComponent<ClockHand>();
 
         UpdateScoreText();
         InvokeRepeating(nameof(TimeTick), 0, 1);
+        
+        timeScale = initialTimeScale;
+        Time.timeScale = timeScale;
+    }
+
+    private void OnEnable()
+    {
+        Player.OnPlayerMove += OnPlayerMove;
+        Player.OnPlayerMoveBackwards += OnPlayerMoveBackwards;
+        Player.OnPlayerMove += OnMove;
+        Player.OnPlayerMoveBackwards += OnMove;
+        
+        Obstacle.OnObstacleDestroyed += OnObstacleDestroyed;
+    }
+
+    private void OnDisable()
+    {
+        Player.OnPlayerMove -= OnPlayerMove;
+        Player.OnPlayerMoveBackwards -= OnPlayerMoveBackwards;
+        Player.OnPlayerMove -= OnMove;
+        Player.OnPlayerMoveBackwards -= OnMove;
+        
+        Obstacle.OnObstacleDestroyed -= OnObstacleDestroyed;
     }
 
     private void TimeTick()
@@ -66,7 +85,7 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateScoreText()
     {
-        scoreText.GetComponent<TextMeshPro>().text = score.ToString();
+        scoreText.text = score.ToString();
     }
 
     private void OnPlayerMove() => totalPlayerRotationDegrees += 360f / 60f;
@@ -137,8 +156,8 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
-        // Time.timeScale = 1f;
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = initialTimeScale;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
     private IEnumerator LerpTimeScaleToZero()
@@ -163,5 +182,6 @@ public class LevelManager : MonoBehaviour
 
         // Ensure that the time scale is exactly 0 when the coroutine finishes
         Time.timeScale = 0f;
+        Restart();
     }
 }
