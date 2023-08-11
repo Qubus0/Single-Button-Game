@@ -63,9 +63,7 @@ public class LevelManager : MonoBehaviour
     private void OnDisable()
     {
         Player.OnPlayerMove -= OnPlayerMove;
-        Player.OnPlayerMoveBackwards -= OnPlayerMoveBackwards;
         Player.OnPlayerMove -= OnMove;
-        Player.OnPlayerMoveBackwards -= OnMove;
         
         Obstacle.OnObstacleDestroyed -= OnObstacleDestroyed;
     }
