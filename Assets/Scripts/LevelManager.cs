@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour
         Player.OnPlayerMove += OnMove;
         Player.OnPlayerMoveBackwards += OnMove;
         
-        Obstacle.OnObstacleDestroyed += OnObstacleDestroyed;
+        // Obstacle.OnObstacleDestroyed += OnObstacleDestroyed;
     }
 
     private void OnDisable()
@@ -65,7 +65,7 @@ public class LevelManager : MonoBehaviour
         Player.OnPlayerMove -= OnPlayerMove;
         Player.OnPlayerMove -= OnMove;
         
-        Obstacle.OnObstacleDestroyed -= OnObstacleDestroyed;
+        // Obstacle.OnObstacleDestroyed -= OnObstacleDestroyed;
     }
 
     private void TimeTick()
@@ -75,11 +75,11 @@ public class LevelManager : MonoBehaviour
         onTimeTick?.Invoke();
     }
 
-    private void OnObstacleDestroyed()
-    {
-        score += difficulty;
-        UpdateScoreText();
-    }
+    // private void OnObstacleDestroyed()
+    // {
+    //     score += difficulty;
+    //     UpdateScoreText();
+    // }
 
     private void UpdateScoreText()
     {
@@ -132,13 +132,17 @@ public class LevelManager : MonoBehaviour
         // if the player overtakes the clock hand, increase the difficulty and reset the counters
         if (distance >= 360f)
         {
-            playerHealth.FullHeal();
             onDifficultyIncrease?.Invoke();
             difficulty++;
             timeScale += difficultyPermanentSpeedUp;
             arcStartAngle += totalTimeHandRotationDegrees;
             totalPlayerRotationDegrees = 0f;
             totalTimeHandRotationDegrees = 0f;
+            
+            score += difficulty * playerHealth.GetHealth();
+            UpdateScoreText();
+            
+            playerHealth.FullHeal();
         }
 
         // the further the player is from the clock hand, the faster the time scale

@@ -14,6 +14,7 @@ public class BulletSpawner : MonoBehaviour
 
     private const float AngleStep = 360f / 60f;
 
+    private List<float> shootAngles = new();
 
     private BulletPattern currentPattern; // todo use coroutine instead of invoke
     private BulletPattern lastPattern;
@@ -60,6 +61,7 @@ public class BulletSpawner : MonoBehaviour
         lastPattern = currentPattern;
         currentPattern.SetTargetDifficulty(difficulty);
 
+        shootAngles.Clear();
         TelegraphPattern();
         Invoke(nameof(ShootPattern), currentPattern.TelegraphTime);
     }
@@ -78,6 +80,7 @@ public class BulletSpawner : MonoBehaviour
                 var line = lineObject.GetComponent<LineRenderer>();
                 var lineDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
                 line.SetPosition(1, lineDirection * 6);
+                shootAngles.Add(targetAngle);
             }
 
             targetAngle += AngleStep;
@@ -89,15 +92,8 @@ public class BulletSpawner : MonoBehaviour
     private void ShootPattern()
     {
         float targetAngle = target.transform.rotation.eulerAngles.y;
-        targetAngle += currentPattern.patternStartingIndex * AngleStep;
 
-        foreach (bool shouldShoot in currentPattern.pattern)
-        {
-            if (shouldShoot)
-                ShootBullet(targetAngle);
-            // rotate 1/60th of a circle for every shot
-            targetAngle += AngleStep;
-        }
+        foreach (float angle in shootAngles) ShootBullet(targetAngle + currentPattern.patternStartingIndex + angle);
     }
 
     // Update is called once per frame
