@@ -5,41 +5,57 @@ public class Player : MonoBehaviour
 {
     public static event Action OnPlayerMove;
     public static event Action OnPlayerMoveBackwards;
-    [SerializeField] private float playerMoveRepeatTime = 0.1f;
-    private float playerSpeedMultiplier = 1f;
     
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] spritesSide;
     [SerializeField] private Sprite[] spritesBack;
     [SerializeField] private Sprite[] spritesFront;
-    private int spriteIndex = 0;
+    private int spriteIndex;
     private Camera cam;
     
     private readonly int damage = 10;
     private bool directionForward = true;
+    
+    private bool spacePressed;
+    private float spaceHeldTime;
+    [SerializeField] private float holdThreshold = 0.2f;
 
     private void Start()
     {
         cam = Camera.main;
         if (cam == null) throw new Exception("No main camera found");
-            
-        InvokeRepeating(nameof(Move), 0, playerMoveRepeatTime);
     }
-
 
     private void Update()
     {
+        // Check if the Space key is pressed
         if (Input.GetKeyDown(KeyCode.Space))
+            spacePressed = true;
+
+        // Check if the Space key is released
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            spriteIndex = 0;
-            playerSpeedMultiplier = 1f;
-            CancelInvoke(nameof(Move));
-            InvokeRepeating(nameof(Move), playerMoveRepeatTime, playerMoveRepeatTime);
-            directionForward = !directionForward;
-            AdjustSprite();
+            if (spaceHeldTime >= holdThreshold)
+                MoveBackwards();
+            else if (spacePressed)
+                MoveForward();
+
+            spacePressed = false;
+            spaceHeldTime = 0f;
         }
+
+        if (spaceHeldTime >= holdThreshold)
+        {
+            MoveBackwards();
+            spaceHeldTime = 0f;
+            spacePressed = false;
+        }
+
+        // Increment time if the Space key is held down
+        if (spacePressed)
+            spaceHeldTime += Time.deltaTime;
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         DealDamage(collision.gameObject);
@@ -51,25 +67,30 @@ public class Player : MonoBehaviour
             health.TakeDamage(damage);
     }
     
-    private void Move()
+    private void MoveForward()
     {
+        gameObject.transform.Rotate(0,  (360f / 60f), 0);
+        OnPlayerMove?.Invoke();
+        
+        directionForward = true;
         spriteIndex++;
         if (spriteIndex > 4)
             spriteIndex = 1;
-
-        playerSpeedMultiplier -= 0.05f;
-        playerSpeedMultiplier = Mathf.Clamp(playerSpeedMultiplier, 0.3f, 1f);
-        
-        if (directionForward)
-            OnPlayerMove?.Invoke();
-        else
-            OnPlayerMoveBackwards?.Invoke();
-        
-        gameObject.transform.Rotate(0, (directionForward ? 1 : -1) * (360f / 60f), 0);
-        
         AdjustSprite();
     }
+    
+    private void MoveBackwards()
+    {
+        gameObject.transform.Rotate(0, -(360f / 60f), 0);
+        OnPlayerMoveBackwards?.Invoke();
 
+        directionForward = false;
+        spriteIndex++;
+        if (spriteIndex > 4)
+            spriteIndex = 1;
+        AdjustSprite();
+    }
+    
     private void AdjustSprite()
     {
         // sprite direction
