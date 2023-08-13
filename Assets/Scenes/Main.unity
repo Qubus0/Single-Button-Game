@@ -319,7 +319,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -413,7 +413,7 @@ Transform:
   m_GameObject: {fileID: 136124948}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 2}
+  m_LocalPosition: {x: -2, y: -1.48, z: -1.3300002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -458,7 +458,7 @@ Transform:
   m_GameObject: {fileID: 428315856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 2}
+  m_LocalPosition: {x: -2, y: -1.47, z: -1.3000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -621,7 +621,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 1}
   - {x: 0, y: 0, z: 0.8}
@@ -750,7 +750,7 @@ Transform:
   m_GameObject: {fileID: 494691457}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 2}
+  m_LocalPosition: {x: -2, y: -1.48, z: -1.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1651,7 +1651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f828056b5fa143bf8aebb96a296a9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMoveRepeatTime: 0.25
   spriteRenderer: {fileID: 1631251323}
   spritesSide:
   - {fileID: -613118663, guid: 7198a907c424148a6b4522fadc009129, type: 3}
@@ -1671,6 +1670,7 @@ MonoBehaviour:
   - {fileID: 1240715403, guid: 7198a907c424148a6b4522fadc009129, type: 3}
   - {fileID: 1332391600, guid: 7198a907c424148a6b4522fadc009129, type: 3}
   - {fileID: -1267463244, guid: 7198a907c424148a6b4522fadc009129, type: 3}
+  holdThreshold: 0.2
 --- !u!114 &1472656586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2176,7 +2176,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.2
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -2336,7 +2336,7 @@ Transform:
   m_GameObject: {fileID: 1862391791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.01, z: -0.029999971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
